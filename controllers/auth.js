@@ -24,7 +24,7 @@ async function crearUsuario(req, res = express.req) {
         // Guarda el Usuario
         await usuario.save();
         // Generar Token de JWT
-        usuario.token = await(generarJWT(usuario.id, usuario.name));
+        let token = await(generarJWT(usuario.id, usuario.name));
 
         // Crea el Restaurante
         if (req.body.restaurant) {
@@ -39,6 +39,7 @@ async function crearUsuario(req, res = express.req) {
         // Regresa el Usuario creado
         return res.status(200).json({
             ok: true,
+            token,
             usuario
         });
     } catch (error) {
